@@ -31,8 +31,8 @@ class ProductManager{ //defino la clase
             this.id = products[this.products.length-1].id+1
             this.codes = products.map(prod => prod.code)
             return null
-        } catch (error) {
-            console.log(error.message)
+        } catch (err) {
+            console.log(err.message)
             return { error: err.message }
         }
     }
