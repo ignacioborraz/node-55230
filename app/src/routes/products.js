@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const products = require('../controllers/products')
+const products = require('../controllers/product')
 
 /* PETICION GET PARA OBTENER PRODUCTOS */
 router.get('/', async(req, res, next) => {

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const carts = require('../controllers/carts')
+const carts = require('../controllers/cart')
 
 /* PETICION PUT PARA AGREGAR UN PRODUCTO A UN CARRITO */
 router.put('/:cid/add/:pid', async(req, res, next) => {
