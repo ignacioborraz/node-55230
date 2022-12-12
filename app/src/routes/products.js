@@ -1,6 +1,7 @@
-const router = require('express').Router()
+import express from 'express'
+const router = express.Router()
 
-const products = require('../controllers/product')
+import products from '../controllers/product.js'
 
 /* PETICION GET PARA OBTENER PRODUCTOS */
 router.get('/', async(req, res, next) => {
@@ -69,4 +70,4 @@ router.delete('/:id', async(req, res, next) => {
     }
 })
 
-module.exports = router
+export default router
