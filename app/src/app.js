@@ -29,9 +29,21 @@ app.get('/', async(_req, res) => {
 
 /* server */
 app.set('port',8080) //seteo el puerto
-
 const httpServer = app.listen( //levanto el servidor escuchando el puerto
-app.get('port'),
-() => {console.log('SERVER READY ON PORT: '+app.get('port'))}
+    app.get('port'),
+    () => console.log('SERVER READY ON PORT: '+app.get('port'))
 )
+
 const socketServer = new Server(httpServer)
+socketServer.on(
+    'connection',
+    socket => {
+        console.log('SOCKET READY')
+        socket.on(
+            'message',
+            data => console.log('FROM CLIENT: '+data)
+        )
+        socket.emit('para_uno','le llega solo a uno')
+        socket.broadcast.emit('para_todos','le llega a todos')
+    }
+)
