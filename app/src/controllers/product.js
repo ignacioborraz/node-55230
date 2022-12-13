@@ -1,4 +1,4 @@
-import fs from 'fs'
+const fs = require('fs')
 
 class ProductManager{ //defino la clase
     
@@ -155,8 +155,4 @@ class ProductManager{ //defino la clase
 
 let products = new ProductManager('./src/data/products.json')
 
-<<<<<<< HEAD
-export default products
-=======
 module.exports = products
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
