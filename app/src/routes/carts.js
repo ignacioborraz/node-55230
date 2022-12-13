@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import express from 'express'
 const router = express.Router()
 
@@ -17,11 +16,6 @@ router.get('/', async(req, res, next) => {
         return next()
     }
 })
-=======
-const router = require('express').Router()
-
-const carts = require('../controllers/cart')
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
 
 /* PETICION PUT PARA AGREGAR UN PRODUCTO A UN CARRITO */
 router.put('/:cid/add/:pid', async(req, res, next) => {
@@ -51,8 +45,4 @@ router.put('/:cid/delete/:pid', async(req, res, next) => {
     }
 })
 
-<<<<<<< HEAD
 export default router
-=======
-module.exports = router
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import fs from 'fs'
-=======
-const fs = require('fs')
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
 
 class CartManager{ //defino la clase
     
@@ -147,8 +143,4 @@ class CartManager{ //defino la clase
 
 let carts = new CartManager('./src/data/carts.json')
 
-<<<<<<< HEAD
 export default carts
-=======
-module.exports = carts
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d

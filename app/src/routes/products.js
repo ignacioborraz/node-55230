@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import express from 'express'
 const router = express.Router()
 
 import products from '../controllers/product.js'
-=======
-const router = require('express').Router()
-
-const products = require('../controllers/product')
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
 
 /* PETICION GET PARA OBTENER PRODUCTOS */
 router.get('/', async(req, res, next) => {
@@ -76,8 +70,4 @@ router.delete('/:id', async(req, res, next) => {
     }
 })
 
-<<<<<<< HEAD
 export default router
-=======
-module.exports = router
->>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
