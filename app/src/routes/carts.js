@@ -3,7 +3,6 @@ const router = express.Router()
 
 import carts from '../controllers/cart.js'
 
-
 /* PETICION GET PARA VER CARRITOS */
 router.get('/', async(req, res, next) => {
     try {
