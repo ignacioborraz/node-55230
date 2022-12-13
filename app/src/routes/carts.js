@@ -1,6 +1,20 @@
-const router = require('express').Router()
+import express from 'express'
+const router = express.Router()
 
-const carts = require('../controllers/cart')
+import carts from '../controllers/cart.js'
+
+/* PETICION GET PARA VER CARRITOS */
+router.get('/', async(req, res, next) => {
+    try {
+        let cart = await carts.getCarts()
+        if (!cart) {
+            return res.status(404).send({error: 'not found'})
+        }
+        return res.status(200).send(cart)
+    } catch(error) {
+        return next()
+    }
+})
 
 /* PETICION PUT PARA AGREGAR UN PRODUCTO A UN CARRITO */
 router.put('/:cid/add/:pid', async(req, res, next) => {
@@ -30,4 +44,4 @@ router.put('/:cid/delete/:pid', async(req, res, next) => {
     }
 })
 
-module.exports = router
+export default router

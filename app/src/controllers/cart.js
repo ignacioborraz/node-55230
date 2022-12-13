@@ -1,4 +1,4 @@
-const fs = require('fs')
+import fs from 'fs'
 
 class CartManager{ //defino la clase
     
@@ -143,4 +143,4 @@ class CartManager{ //defino la clase
 
 let carts = new CartManager('./src/data/carts.json')
 
-module.exports = carts
+export default carts
