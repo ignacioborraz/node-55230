@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "e2.js",
+  "type": "module",
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
@@ -11,6 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+<<<<<<< HEAD
+    "express-handlebars": "^6.0.6",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.5.4"
+=======
     "morgan": "^1.10.0"
+>>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
   }
 }

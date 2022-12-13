@@ -1,8 +1,17 @@
+<<<<<<< HEAD
+import express from 'express' //importo el módulo de express
+const app = express() //ejecuto el método express() para crear un srvidor
+
+import errorHandler from './middlewares/errorHandler.js' //importo el manejador de rrores
+import logger from 'morgan' //importo el modulo para el logger
+import router from './routes/index.js' //importo el enrrutador principal
+=======
 const express = require('express') //requiero el módulo de express
 const app = express()  //ejecuto el método express() para crear un srvidor
 const errorHandler = require('./middlewares/errorHandler')
 const logger = require('morgan')
 const router = require('./routes/index') //requiero el contenedor creado con la clase
+>>>>>>> a67fe6ae0f56500cc93bfeceb8e8c1b4d1564e6d
 
 /* middlewares */
 app.use(express.json()) //para convertir las respuestas en json
