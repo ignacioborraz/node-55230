@@ -14,7 +14,8 @@ router.get('/', async(req, res, next) => {
         return res.status(200).render('index', {
             title: "list of products",
             nav: [
-                { url: "/form", title: "form" }
+                { url: "/form", title: "form" },
+                { url: "/chat", title: "chat" }
             ],
             products: prods
         })
@@ -35,7 +36,8 @@ router.get('/detail/:id', async(req, res, next) => {
             title: "list of products",
             nav: [
                 { url: "/", title: "home" },
-                { url: "/form", title: "form" }
+                { url: "/form", title: "form" },
+                { url: "/chat", title: "chat" }
             ],
             product: one
         })
@@ -49,48 +51,22 @@ router.get('/form', async(req, res) => {
     res.status(200).render('form', {
         title: "new product",
         nav: [
-            { url: "./", title: "list" }
+            { url: "./", title: "list" },
+            { url: "/chat", title: "chat" }
         ]
     })
 })
 
-/* PETICION POST PARA CREAR UN PRODUCTO */
-router.post('', async(req, res, next) => {
-    let { title,description,price,code,stock,thumbnail } = req.body
-    try {
-        let prod = await products.addProduct({ title,description,price,code,stock,thumbnail })
-        return res.status(200).render(prod)
-    } catch(error) {
-        return next()
-    }
-})
-
-/* PETICION PUT PARA MODIFICAR UN PRODUCTO */
-router.put('/:id', async(req, res, next) => {
-    let { id } = req.params
-    try {
-        let prod = await products.updateProduct(Number(id),req.body)
-        if (!prod) {
-            return res.status(404).render({error: 'not found'})
-        }
-        return res.status(200).render(prod)
-    } catch(error) {
-        return next()
-    }
-})
-
-/* PETICION DELETE PARA ELIMINAR UN PRODUCTO */
-router.delete('/:id', async(req, res, next) => {
-    let { id } = req.params
-    try {
-        let prod = await products.deleteProduct(Number(id))
-        if (!prod) {
-            return res.status(404).render({error: 'not found'})
-        }
-        return res.status(200).render(prod)
-    } catch(error) {
-        return next(error)
-    }
+/* PETICION GET PARA ACCEDER AL CHAT */
+router.get('/chat', async(req, res) => {
+    res.status(200).render('chat', {
+        title: "chat",
+        nav: [
+            { url: "/", title: "list" },
+            { url: "/form", title: "form" }
+        ],
+        fileScript: "chat"
+    })
 })
 
 export default router

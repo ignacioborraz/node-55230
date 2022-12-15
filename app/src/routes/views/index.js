@@ -1,8 +1,8 @@
 import express from 'express'
 const router = express.Router()
 
-import products from './products.js'
+import views from './views.js'
 
-router.use('/', products)
+router.use('/', views)
 
 export default router
