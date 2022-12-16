@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-6 d-flex flex-column">
                 <h3>Product register</h3>
-                <form id="productsForm" >
+                <form id="productsForm" action="/new-product", method="POST">
                     <div class="mb-2">
                         <label for="productTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" name="title" id="productTitle" />
@@ -28,7 +28,7 @@
                         <label for="productThumbnail" class="form-label">Thumbnail</label>
                         <input type="text" class="form-control" name="thumbnail" id="productThumbnail" aria-describedby="thumbnailSource"/>
                     </div>
-                    <button id='send-product' type="submit" class="btn btn-primary mt-2">Save product</button>
+                    <button id='newProduct' type="submit" class="btn btn-primary mt-2">Save product</button>
                 </form>
                 </div>
 		    <div id="productTable" class="col-6"></div>

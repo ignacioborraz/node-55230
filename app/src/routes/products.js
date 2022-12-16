@@ -32,11 +32,15 @@ router.get('/:id', async(req, res, next) => {
 })
 
 /* PETICION POST PARA CREAR UN PRODUCTO */
-router.post('', async(req, res, next) => {
+router.post('/', async(req, res, next) => {
     let { title,description,price,code,stock,thumbnail } = req.body
     try {
         let prod = await products.addProduct({ title,description,price,code,stock,thumbnail })
-        return res.status(200).send(prod)
+        if (prod.message==='product created') {
+            return res.status(200).send(prod)
+        } else {
+            return res.status(400).send(prod)
+        }
     } catch(error) {
         return next()
     }
