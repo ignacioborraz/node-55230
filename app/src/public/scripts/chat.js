@@ -33,11 +33,3 @@ socket.on('messageLogs', data => { //recibo la respuesta del servidor para rende
     let log = document.getElementById('messageLogs')    
     log.innerHTML = data.map(message => `<br><b>${message.user}</b>: ${message.message}`).join('')
 })
-
-function captureData(event) {
-    event.preventDefault()
-    let data = document.querySelectorAll('.form-control')
-    let values = {}
-    data.forEach(e => values[e.name] = e.value)
-}
-//document.querySelector('#send-product').addEventListener('click',captureData)
