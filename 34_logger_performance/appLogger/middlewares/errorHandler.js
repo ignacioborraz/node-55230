@@ -1,7 +1,11 @@
-export default (error, req, res, next) => {
-  console.log(error);
-  return res.status(500).json({
+import config from "../configs/loggers/config.dev.js";
+
+export default (error,req,res,next)=>{
+  req.logger = config
+  req.logger.FATAL(`${req.method} ${req.url} - ${error.message} - ${new Date().toLocaleTimeString()}`)
+  return res.status(error.statusCode).json({
     message: error.message,
-    response: `${req.method} ${req.ur}l`,
-  });
-};
+    success: false,
+    response: 'esto es del middleware'
+  })
+}
