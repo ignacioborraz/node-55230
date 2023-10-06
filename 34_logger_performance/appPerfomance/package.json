@@ -1,0 +1,25 @@
+{
+  "name": "appperfomance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
+    "simple": "artillery quick --count 50 --num 20 'http://localhost:8090/simple' -o ./test/simple.json",
+    "complex": "artillery quick --count 50 --num 20 'http://localhost:8090/complex' -o ./test/complex.json",
+    "performance": "artillery run ./test/config.yaml -o ./test/crd.json",
+    "report": "artillery report ./test/crd.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.4",
+    "nodemon": "^3.0.1"
+  }
+}
