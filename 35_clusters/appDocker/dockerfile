@@ -1,0 +1,24 @@
+# definir la imagen base
+FROM node
+
+# crear carpeta donde se guardará la app
+WORKDIR /app-35-docker
+
+# copiar el package.json para poder instalar los modulos
+COPY package*.json ./
+
+# instalar los módulos
+RUN npm install
+
+# copiar el resto de la app
+COPY . .
+
+# configurar puerto de exposición (puerto del contenedor SE DEFINE EN APP)
+# puerto de APP (adentro) 8090
+# puerto de APP (afuera) 9999
+EXPOSE 9999
+# EXPOSE 8888
+
+# configurar comando para levantar la app
+CMD ["npm","start"]
+# CMD ["npm","run","dev"]
