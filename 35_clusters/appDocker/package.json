@@ -8,7 +8,11 @@
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
     "simple": "artillery quick --count 50 --num 20 'http://localhost:8090/simple' -o ./test/simple.json",
-    "complex": "artillery quick --count 50 --num 20 'http://localhost:8090/complex' -o ./test/complex.json"
+    "complex": "artillery quick --count 50 --num 20 'http://localhost:8090/complex' -o ./test/complex.json",
+    "image-prod": "docker build -t app-35-prod .",
+    "image-dev": "docker build -t app-35-dev .",
+    "container-prod": "docker run -p 9999:8090 app-35-prod",
+    "container-dev": "docker run -p 8888:8090 app-35-dev"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +22,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^7.5.4",
+    "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
   }
 }
