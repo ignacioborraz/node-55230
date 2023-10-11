@@ -15,9 +15,9 @@ COPY . .
 
 # configurar puerto de exposición (puerto del contenedor SE DEFINE EN APP)
 # puerto de APP (adentro) 8090
-# puerto de APP (afuera) 9999
-EXPOSE 9999
-# EXPOSE 8888
+# puerto de APP (afuera) 9999 por ejemplo
+# conviene configurar EL MISMO PUERTO para que externamente pueda configurar manualmente el puerto de exposición
+EXPOSE 8090
 
 # configurar comando para levantar la app
 CMD ["npm","start"]
