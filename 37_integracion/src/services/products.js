@@ -6,13 +6,13 @@ export default class ProductsService {
   constructor() {}
   create = async (data) => {
     try {
-      let ones = await Product.create(data);
+      let one = await Product.create(data);
       return {
-        message: "product creted",
+        message: "product created",
         response: one._id,
       };
     } catch (error) {
-			console.log(error);
+      console.log(error);
       return {
         message: error.message,
         response: error.name,
