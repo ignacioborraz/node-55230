@@ -1,6 +1,6 @@
 import fs from "fs";
 
-export default class Product {
+export default class ProductsFs {
   constructor() {
     this.products = [];
     this.path = "./src/dao/fs/files/products.json";
@@ -16,23 +16,41 @@ export default class Product {
     return true;
   }
   async create(data) {
-    this.products.push(data);
-    let data_json = JSON.stringify(this.products, null, 2);
-    await fs.promises.writeFile(this.path, data_json);
-    return {
-      message: "product created",
-      response: data._id,
-    };
+    try {
+      this.products.push(data);
+      let data_json = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      return {
+        message: "product created",
+        response: data._id,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        message: error.message,
+        response: error.name,
+      };
+    }
   }
   read() {
-    let all = this.products;
-    if (this.products.length > 0) {
+    try {
+      let all = this.products;
+      if (this.products.length > 0) {
+        return {
+          message: "product read",
+          response: all,
+        };
+      } else {
+        return {
+          message: "no products",
+          response: null,
+        };
+      }
+    } catch (error) {
       return {
-        message: "product read",
-        response: all,
+        message: error.message,
+        response: error.fileName + ": " + error.lineNumber,
       };
-    } else {
-      return null;
     }
   }
   async update(id, data) {
@@ -49,11 +67,17 @@ export default class Product {
           response: one,
         };
       } else {
-        return null;
+        return {
+          message: "no product",
+          response: null,
+        };
       }
     } catch (error) {
       console.log(error);
-      return false;
+      return {
+        message: error.message,
+        response: error.fileName + ": " + error.lineNumber,
+      };
     }
   }
   async destroy(id) {
@@ -68,11 +92,17 @@ export default class Product {
           response: one._id,
         };
       } else {
-        return null;
+        return {
+          message: "no product",
+          response: null,
+        };
       }
     } catch (error) {
       console.log(error);
-      return false;
+      return {
+        message: error.message,
+        response: error.fileName + ": " + error.lineNumber,
+      };
     }
   }
 }

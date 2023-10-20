@@ -12,7 +12,7 @@ import IndexRouter from "./routes/index.js";
 let router = new IndexRouter();
 router = router.getRouter();
 
-const PORT = env.PORT;
+const PORT = env.PORT || 8080;
 const ready = () => {
   console.log("server ready on port: " + PORT);
   connect(env.LINK_DB).then(() => "connected to db");	//luego manejar con DAO

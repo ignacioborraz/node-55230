@@ -7,8 +7,11 @@
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
-    "image": "docker build -t test .",
-    "container": "docker run -p 8080:8080 test"
+    "image": "docker build -t fakerusers .",
+    "container": "docker run -p 8080:8080 fakerusers",
+    "prepare": "docker tag fakerusers ignacioborraz/fakerusers:1.0.0",
+    "push": "docker push ignacioborraz/fakerusers:1.0.0",
+    "orquestra": "kubectl apply -f ./kconfig.yaml"
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kuberservice
+  name: faker-service
 spec:
   selector:
-    app: kuberapiuser
+    app: fakerusers
   ports:
     - port: 80
       targetPort: 8080
@@ -13,20 +13,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kuberdeploy
+  name: faker-deploy
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: kuberapiuser
+      app: fakerusers
   template:
     metadata:
       labels:
-        app: kuberapiuser
+        app: fakerusers
     spec:
       containers:
-        - name: test
-          image: ignacioborraz/test:1.0.0
+        - name: faker-container
+          image: ignacioborraz/fakerusers:1.0.0
           ports:
             - containerPort: 8080
           imagePullPolicy: Always

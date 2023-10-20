@@ -1,4 +1,4 @@
-import ProductsService from "../services/products.js";
+import ProductsService from "../services/products.service.js";
 
 export default class ProductsController {
   //el controlador del recurso se construye en base a los servicios
