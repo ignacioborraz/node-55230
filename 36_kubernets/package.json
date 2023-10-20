@@ -1,0 +1,24 @@
+{
+  "name": "clase36_docker_kubernets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
+    "image": "docker build -t fakerusers .",
+    "container": "docker run -p 8080:8080 fakerusers",
+    "prepare": "docker tag fakerusers ignacioborraz/fakerusers:1.0.0",
+    "push": "docker push ignacioborraz/fakerusers:1.0.0",
+    "orquestra": "kubectl apply -f ./kconfig.yaml"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
