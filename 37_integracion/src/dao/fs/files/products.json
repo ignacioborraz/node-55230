@@ -4,5 +4,11 @@
     "photo": "foto 1",
     "price": 10,
     "_id": "9993dc16165166afb7be40fd"
+  },
+  {
+    "name": "producto MONGO",
+    "photo": "foto 1",
+    "price": 10,
+    "_id": "97e9f39ddc8098fae6929c10"
   }
 ]

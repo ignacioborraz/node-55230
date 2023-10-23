@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { connect } from "mongoose";
 
 import env from "./config/env.js";
 
@@ -13,10 +12,7 @@ let router = new IndexRouter();
 router = router.getRouter();
 
 const PORT = env.PORT || 8080;
-const ready = () => {
-  console.log("server ready on port: " + PORT);
-  connect(env.LINK_DB).then(() => "connected to db");	//luego manejar con DAO
-};
+const ready = () => console.log("server ready on port: " + PORT);
 
 const server = express();
 
