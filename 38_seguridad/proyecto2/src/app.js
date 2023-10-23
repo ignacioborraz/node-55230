@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
 const app = express();
-const connection = mongoose.connect('URL de mongo')
+const connection = mongoose.connect('mongodb://localhost:27017/security').then(()=>console.log('DB connected'))
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views`);
 app.set('view engine','handlebars');
