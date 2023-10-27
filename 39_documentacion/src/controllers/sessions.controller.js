@@ -1,7 +1,7 @@
-import { usersService } from "../services/index.js";
-import { createHash, passwordValidation } from "../utils/index.js";
+import { usersService } from "../services/adoptions.service.js";
+import { createHash, passwordValidation } from "../config/hash.js";
 import jwt from "jsonwebtoken";
-import UserDTO from "../dto/User.dto.js";
+import UserDTO from "../dto/users.dto.js";
 
 const register = async (req, res) => {
   try {
@@ -39,21 +39,13 @@ const login = async (req, res) => {
       return res.status(400).send({ status: "error", error: "Incorrect password" });
     const userDto = UserDTO.getUserTokenFrom(user);
     const token = jwt.sign(userDto, "tokenSecretJWT", { expiresIn: "1h" });
-    return res.status(200).cookie("coderCookie", token, { maxAge: 3600000 }).send({ status: "success", message: "Logged in" });
+    return res.status(200).cookie("amUser", token, { maxAge: 3600000 }).send({ status: "success", message: "Logged in" });
   } catch (error) {
 		return res.status(500).send({ status: "fatal", error: error.message });
   }
 };
 
-const current = async (req, res) => {
-  try {
-    const cookie = req.cookies["coderCookie"];
-    const user = jwt.verify(cookie, "tokenSecretJWT");
-    if (user) return res.status(200).send({ status: "success", payload: user });
-  } catch (error) {
-		return res.status(500).send({ status: "fatal", error: error.message });
-  }
-};
+
 
 const unprotectedLogin = async (req, res) => {
   try {
@@ -81,11 +73,4 @@ const unprotectedCurrent = async (req, res) => {
 		return res.status(500).send({ status: "fatal", error: error.message });
   }
 };
-export default {
-  current,
-  login,
-  register,
-  current,
-  unprotectedLogin,
-  unprotectedCurrent,
-};
+export { login, register };

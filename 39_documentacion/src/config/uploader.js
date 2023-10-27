@@ -1,9 +1,9 @@
-import __dirname from "./index.js";
+import __dirname from "../../utils.js";
 import multer from "multer";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, `${__dirname}/../public/img`);
+    cb(null, `${__dirname}/src/public/img`);
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);
