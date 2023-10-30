@@ -1,17 +1,12 @@
 import UsersService from "../services/users.service.js";
+import CustomError from "../config/CustomError.js";
+import errors from "../config/errors.js";
 
 export default async (req, res, next) => {
   try {
-    const exists = await new UsersService().getUserByEmail(
-      req.body.email,
-      next
-    );
+    const exists = await new UsersService().getUserByEmail(req.body.email,next);
     if (exists) {
-      let error = new Error("User already exists");
-      error.status = "error";
-      error.statusCode = 400;
-      error.where = "middleware";
-      return next(error);
+      CustomError.newError(errors.auth);
     } else {
       return next();
     }

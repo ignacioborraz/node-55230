@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import CustomError from "../config/CustomError.js";
+import errors from "../config/errors.js";
 
 export default async (req, res, next) => {
   try {
@@ -9,11 +11,7 @@ export default async (req, res, next) => {
         return next();
       }
     }
-    let error = new Error("invalid credentials");
-    error.status = "error";
-    error.statusCode = 401;
-    error.where = "middleware";
-    return next(error);
+    CustomError.newError(errors.auth);
   } catch (error) {
     return next(error);
   }

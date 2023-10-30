@@ -1,5 +1,7 @@
 import UsersService from "../services/users.service.js";
 import { passwordValidation } from "../config/hash.js";
+import CustomError from "../config/CustomError.js";
+import errors from "../config/errors.js";
 
 export default async (req, res, next) => {
   try {
@@ -7,13 +9,9 @@ export default async (req, res, next) => {
     const password = req.body.password
     const isValidPassword = await passwordValidation(user, password);
     if (!isValidPassword) {
-      let error = new Error("invalid credentials");
-      error.status = "error";
-      error.statusCode = 401;
-      error.where = "middleware";
-      return next(error);
+      CustomError.newError(errors.auth);
     } else {
-      delete user.password
+      user.password = null
       req.user = user
       return next()
     }
