@@ -38,7 +38,7 @@ const updateUser = async (req, res, next) => {
     if (result) {
       return res.status(200).json({ status: "success", message: "User updated" });
     }
-    CustomError.newError(errors.notFound);
+    CustomError.newError(errors.notFoundOne);
   } catch (error) {
     error.where = "controller";
     return next(error);
@@ -52,7 +52,7 @@ const deleteUser = async (req, res, next) => {
     if (result) {
       return res.status(200).json({ status: "success", message: "User deleted" });
     }
-    CustomError.newError(errors.notFound);
+    CustomError.newError(errors.notFoundOne);
   } catch (error) {
     error.where = "controller";
     return next(error);

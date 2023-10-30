@@ -48,7 +48,7 @@ const updatePet = async (req, res, next) => {
     if (result) {
       return res.status(200).json({ status: "success", message: "Pet updated" });
     }
-    CustomError.newError(errors.notFound);
+    CustomError.newError(errors.notFoundOne);
   } catch (error) {
     error.where = "controller";
     return next(error);
@@ -62,7 +62,7 @@ const deletePet = async (req, res, next) => {
     if (result) {
       return res.status(200).json({ status: "success", message: "Pet deleted" });
     }
-    CustomError.newError(errors.notFound);
+    CustomError.newError(errors.notFoundOne);
   } catch (error) {
     return next(error);
   }
