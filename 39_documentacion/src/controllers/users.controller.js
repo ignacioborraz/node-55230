@@ -1,53 +1,76 @@
-import { usersService } from "../services/adoptions.service.js";
+import UsersService from "../services/users.service.js";
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   try {
-    const users = await usersService.getAll();
-    res.status(200).send({ status: "success", payload: users });
+    const result = await new UsersService().getAll({}, next);
+    if (result.length > 0) {
+      return res.status(200).json({ status: "success", payload: result });
+    } else {
+      let error = new Error("not found docs");
+      error.status = "error";
+      error.statusCode = 404;
+      error.where = "database";
+      return next(error);
+    }
   } catch (error) {
-		return res.status(500).send({ status: "fatal", error: error.message });
+    return next(error);
   }
 };
 
 const getUser = async (req, res) => {
   try {
     const userId = req.params.uid;
-    const user = await usersService.getUserById(userId);
-    if (!user)
-      return res.status(404).send({ status: "error", error: "User not found" });
-    return res.status(200).send({ status: "success", payload: user });
+    const result = await new UsersService().getUserById(userId);
+    result.password = null;
+    if (result) {
+      return res.status(200).json({ status: "success", payload: result });
+    } else {
+      let error = new Error("not found docs");
+      error.status = "error";
+      error.statusCode = 404;
+      error.where = "database";
+      return next(error);
+    }
   } catch (error) {
-    return res.status(500).send({ status: "fatal", error: error.message });
+    return next(error);
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
   try {
-    const updateBody = req.body;
-    const userId = req.params.uid;
-    const user = await usersService.getUserById(userId);
-    if (!user)
-      return res.status(404).send({ status: "error", error: "User not found" });
-    const result = await usersService.update(userId, updateBody);
-    return res.status(200).send({ status: "success", message: "User updated" });
+    const uid = req.params.uid;
+    const data = req.body;
+    const result = await new UsersService().update(uid, data, next);
+    if (result) {
+      return res.status(200).json({ status: "success", message: "User updated" });
+    } else {
+      let error = new Error("not found doc");
+      error.status = "error";
+      error.statusCode = 404;
+      error.where = "database";
+      return next(error);
+    }
   } catch (error) {
-    return res.status(500).send({ status: "fatal", error: error.message });
+    return next(error);
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
-    const userId = req.params.uid;
-    const result = await usersService.getUserById(userId);
-    return res.status(200).send({ status: "success", message: "User deleted" });
+    const uid = req.params.uid;
+    const result = await new UsersService().delete(uid, next);
+    if (result) {
+      return res.status(200).json({ status: "success", message: "User deleted" });
+    } else {
+      let error = new Error("not found doc");
+      error.status = "error";
+      error.statusCode = 404;
+      error.where = "database";
+      return next(error);
+    }
   } catch (error) {
-    return res.status(500).send({ status: "fatal", error: error.message });
+    return next(error);
   }
 };
 
-export default {
-  deleteUser,
-  getAllUsers,
-  getUser,
-  updateUser,
-};
+export { getAllUsers, getUser, updateUser, deleteUser };

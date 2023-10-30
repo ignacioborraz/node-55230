@@ -1,9 +1,44 @@
 import Pet from "./models/pet.model.js";
 
 export default class PetsMongo {
-  create = (data) => Pet.create(data);
-  get = (params) => Pet.find(params);
-  getBy = (params) => Pet.findOne(params);
-  update = (id, data) => Pet.findByIdAndUpdate(id, { $set: data });
-  delete = (id) => Pet.findByIdAndDelete(id);
+  create = async (data) => {
+    try {
+      return await Pet.create(data);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  get = async (params) => {
+    try {
+      return await Pet.find(params);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  getBy = async (params) => {
+    try {
+      return await Pet.findOne(params);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  update = async (id, data) => {
+    try {
+      return await Pet.findByIdAndUpdate(id, { $set: data });
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  delete = async (id) => {
+    try {
+      return await Pet.findByIdAndDelete(id);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
 }

@@ -1,9 +1,43 @@
 import Adoption from "./models/adoption.model.js";
 
 export default class AdoptionsMongo {
-  create = (data) => Adoption.create(data);
-  get = (params) => Adoption.find(params);
-  getBy = (params) => Adoption.findOne(params);
-  update = (id, data) => Adoption.findByIdAndUpdate(id, { $set: data });
-  delete = (id) => Adoption.findByIdAndDelete(id);
+  create = async (data) => {
+    try {
+      return await Adoption.create(data);
+    } catch (error) {
+      return error;
+    }
+  };
+  get = async (params) => {
+    try {
+      return await Adoption.find(params);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  getBy = async (params) => {
+    try {
+      return await Adoption.findOne(params);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  update = async (id, data) => {
+    try {
+      return await Adoption.findByIdAndUpdate(id, { $set: data });
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
+  delete = async (id) => {
+    try {
+      return await Adoption.findByIdAndDelete(id);
+    } catch (error) {
+      error.where = "dao";
+      return error;
+    }
+  };
 }
