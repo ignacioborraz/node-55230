@@ -1,44 +1,28 @@
+import MyError from "../../config/MyError.js";
 import Product from "./models/product.model.js";
+import dictionary from "../../config/errors.js";
 
 export default class ProductsMongo {
   constructor() {}
-  create = async (data) => {
+  create = async (data, next) => {
     try {
       let one = await Product.create(data);
-      return {
-        message: "product created",
-        response: one._id,
-      };
+      return one
     } catch (error) {
-      console.log(error);
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "mongo"
+      next(error)
     }
   };
-  read = async () => {
+  read = async (next) => {
     try {
       let all = await Product.find();
-      if (all.length > 0) {
-        return {
-          message: "product read",
-          response: all,
-        };
-      } else {
-        return {
-          message: "no products",
-          response: null,
-        };
-      }
+      return all
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
+      error.from = "mongo"
+      return next(error)
     }
   };
-  update = async (id, data) => {
+  update = async (id, data, next) => {
     try {
       let one = await Product.findByIdAndUpdate(id, data, {
         new: true,
@@ -55,13 +39,11 @@ export default class ProductsMongo {
         };
       }
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
+      error.from = "mongo"
+      return next(error)
     }
   };
-  destroy = async (id) => {
+  destroy = async (id, next) => {
     try {
       let one = await Product.findByIdAndDelete(id);
       if (one) {
@@ -76,10 +58,8 @@ export default class ProductsMongo {
         };
       }
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
+      error.from = "mongo"
+      return next(error)
     }
   };
 }

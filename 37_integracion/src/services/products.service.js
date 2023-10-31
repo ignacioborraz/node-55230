@@ -6,48 +6,40 @@ export default class ProductsService {
   constructor() {
     this.repository = new ProductsRepository()
   }
-  create = async (data) => {
+  create = async (data, next) => {
     try {
-      let response = await this.repository.create(data)
+      let response = await this.repository.create(data, next)
       return response
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "service"
+      next(error)
     }
   };
-  read = async () => {
+  read = async (next) => {
     try {
-      let response = await this.repository.read()
+      let response = await this.repository.read(next)
       return response
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "service"
+      return next(error)
     }
   };
-  update = async (id, data) => {
+  update = async (id, data, next) => {
     try {
-      let response = this.repository.update(id,data)
+      let response = this.repository.update(id,data, next)
       return response
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "service"
+      return next(error)
     }
   };
-  destroy = async (id) => {
+  destroy = async (id, next) => {
     try {
-      let response = await this.repository.destroy(id)
+      let response = await this.repository.destroy(id, next)
       return response
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "service"
+      return next(error)
     }
   };
 }
