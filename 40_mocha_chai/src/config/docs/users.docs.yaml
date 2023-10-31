@@ -1,0 +1,35 @@
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email registrado
+        password:
+          type: string
+          description: Contraseña guardada en la base de datos
+      example:
+        email: igna@coder.com
+        password: hola1234
+paths:
+  api/sessions/login:
+    post:
+      summary: Iniciar sesión
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        description: A JSON object containing the login and password.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: El éxito retorna una cookie "token" para enviar en las peticiones que requieran autenticación
+          headers: 
+            Set-Cookie:
+              schema: 
+                type: string
+                example: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
