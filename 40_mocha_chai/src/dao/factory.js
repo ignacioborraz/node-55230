@@ -12,7 +12,7 @@ switch (persistence) {
     console.log("File System connected");
     break;
   default:
-    connect(process.env.MONGO_URL)
+    connect("mongodb+srv://igna:hola1234@cluster0.dbl4oxi.mongodb.net/adoptme-55230")
       .then(() => console.log("Mongo connected"))
       .catch((err) => console.log(err));
     const { default: AdoptionsMongo } = await import("./mongo/adoptions.mongo.js");

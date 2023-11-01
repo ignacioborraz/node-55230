@@ -1,0 +1,23 @@
+import { expect } from "chai";
+import UsersRepository from "../../src/repository/users.repository.js";
+
+describe("Testeando el recurso USER", () => {
+  let repository = new UsersRepository();
+  let idToDelete = null;
+  it("Testeando que el usuario se crea correctamente", async () => {
+    let data = {
+      first_name: "maxi",
+      last_name: "coder",
+      email: "maxi@coder.com",
+      password: "hola1234",
+    };
+    let response = await repository.create(data);
+    idToDelete = response._id;
+    expect(response).to.have.property("_id");
+  });
+  it("Testeando que el usuario se elimina correctamente", async () => {
+    await repository.delete(idToDelete);
+    let response = await repository.getBy({ _id: idToDelete });
+    expect(response).to.be.equals(null);
+  });
+});

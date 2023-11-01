@@ -27,7 +27,7 @@ export default class PetsMongo {
   };
   update = async (id, data, next) => {
     try {
-      return await Pet.findByIdAndUpdate(id, { $set: data });
+      return await Pet.findByIdAndUpdate(id, { $set: data }, { new: true });
     } catch (error) {
       error.where = "dao";
       return next(error);

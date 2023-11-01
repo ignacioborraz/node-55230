@@ -2,7 +2,6 @@ import "dotenv/config.js"
 import config from "./config/swagger.js"
 
 import express from "express";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import swaggerJSDoc from "swagger-jsdoc"
