@@ -10,12 +10,12 @@ export default class ProductsRepository {
     try {
       data = new ProductsDTO(data);
       let response = await this.model.create(data, next);
-      console.log(response);
+      console.log("repository", response);
       return response;
     } catch (error) {
+      console.log("repository error", error);
       error.from = "repository"
-      console.log(error);
-      next(error)
+      return next(error)
     }
   };
   read = async (next) => {

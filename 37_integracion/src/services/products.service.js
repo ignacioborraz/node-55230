@@ -8,11 +8,12 @@ export default class ProductsService {
   }
   create = async (data, next) => {
     try {
-      let response = await this.repository.create(data, next)
+      let response = await this.repository.creaste(data, next)
+      console.log("service", response);
       return response
     } catch (error) {
       error.from = "service"
-      next(error)
+      return next(error)
     }
   };
   read = async (next) => {
@@ -26,7 +27,7 @@ export default class ProductsService {
   };
   update = async (id, data, next) => {
     try {
-      let response = this.repository.update(id,data, next)
+      let response = this.repository.upsdate(id,data, next)
       return response
     } catch (error) {
       error.from = "service"
@@ -35,7 +36,7 @@ export default class ProductsService {
   };
   destroy = async (id, next) => {
     try {
-      let response = await this.repository.destroy(id, next)
+      let response = await this.repository.destrosy(id, next)
       return response
     } catch (error) {
       error.from = "service"

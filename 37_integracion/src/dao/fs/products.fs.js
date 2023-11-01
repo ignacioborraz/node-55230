@@ -15,94 +15,49 @@ export default class ProductsFs {
     }
     return true;
   }
-  async create(data) {
+  async create(one, next) {
     try {
-      this.products.push(data);
+      this.products.push(one);
       let data_json = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, data_json);
-      return {
-        message: "product created",
-        response: data._id,
-      };
+      return one;
     } catch (error) {
-      console.log(error);
-      return {
-        message: error.message,
-        response: error.name,
-      };
+      error.from = "fs";
+      next(error);
     }
   }
-  read() {
+  read(next) {
     try {
-      let all = this.products;
-      if (this.products.length > 0) {
-        return {
-          message: "product read",
-          response: all,
-        };
-      } else {
-        return {
-          message: "no products",
-          response: null,
-        };
-      }
+      return this.products;
     } catch (error) {
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
+      error.from = "fs";
+      next(error);
     }
   }
-  async update(id, data) {
+  async update(id, data, next) {
+    try {
+      let one = this.products.find((each) => each._id === id);
+      for (let prop in data) {
+        one[prop] = data[prop];
+      }
+      let data_json = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      return one;
+    } catch (error) {
+      error.from = "fs";
+      return next(error);
+    }
+  }
+  async destroy(id, next) {
     try {
       let one = this.products.find((each) => each._id == id);
-      if (one) {
-        for (let prop in data) {
-          one[prop] = data[prop];
-        }
-        let data_json = JSON.stringify(this.products, null, 2);
-        await fs.promises.writeFile(this.path, data_json);
-        return {
-          message: "product updated",
-          response: one,
-        };
-      } else {
-        return {
-          message: "no product",
-          response: null,
-        };
-      }
+      this.products = this.products.filter((each) => each._id !== id);
+      let data_json = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      return one;
     } catch (error) {
-      console.log(error);
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
-    }
-  }
-  async destroy(id) {
-    try {
-      let one = this.products.find((each) => each._id == id);
-      if (one) {
-        this.products = this.products.filter((each) => each._id !== id);
-        let data_json = JSON.stringify(this.products, null, 2);
-        await fs.promises.writeFile(this.path, data_json);
-        return {
-          message: "product deleted",
-          response: one._id,
-        };
-      } else {
-        return {
-          message: "no product",
-          response: null,
-        };
-      }
-    } catch (error) {
-      console.log(error);
-      return {
-        message: error.message,
-        response: error.fileName + ": " + error.lineNumber,
-      };
+      error.from = "fs";
+      return next(error);
     }
   }
 }

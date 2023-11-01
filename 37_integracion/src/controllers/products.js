@@ -12,11 +12,11 @@ export default class ProductsController {
   create = async (req, res, next) => {
     try {
       let data = req.body;
-      let response = await this.service.create(data,next);
+      let response = await this.service.create(data, next);
       return res.status(201).json(response);
     } catch (error) {
-      error.from = "controller"
-      next(error);
+      error.from = "controller";
+      return next(error);
     }
   };
   read = async (req, res, next) => {
@@ -25,10 +25,10 @@ export default class ProductsController {
       if (response.length > 0) {
         return res.status(200).json(response);
       } else {
-        return MyError.new(dictionary.notFound)
+        return MyError.new(dictionary.notFound);
       }
     } catch (error) {
-      error.from = "controller"
+      error.from = "controller";
       return next(error);
     }
   };
@@ -37,19 +37,25 @@ export default class ProductsController {
       let id = req.params.id;
       let data = req.body;
       let response = await this.service.update(id, data, next);
+      if (response===null) {
+        return MyError.new(dictionary.notFoundOne)
+      }
       return res.status(200).json(response);
     } catch (error) {
-      error.from = "controller"
+      error.from = "controller";
       return next(error);
     }
   };
   destroy = async (req, res, next) => {
     try {
       let id = req.params.id;
-      let response = await this.service.destroy(id, destroy);
+      let response = await this.service.destroy(id, next);
+      if (response===null) {
+        return MyError.new(dictionary.notFoundOne)
+      }
       return res.status(200).json(response);
     } catch (error) {
-      error.from = "controller"
+      error.from = "controller";
       return next(error);
     }
   };

@@ -1,11 +1,11 @@
-import CustomError from "../config/CustomError.js";
+import MyError from "../config/MyError.js";
 import errors from "../config/errors.js";
 
 export default async (req, res, next) => {
   try {
-    const { name, specie } = req.body;
-    if (!name || !specie) {
-      CustomError.newError(errors.incomplete);
+    const { name, photo, price } = req.body;
+    if (!name || !photo || ! price) {
+      MyError.new(errors.incomplete);
     } else {
       return next();
     }
