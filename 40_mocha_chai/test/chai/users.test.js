@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import UsersRepository from "../../src/repository/users.repository.js";
 
-describe("Testeando el recurso USER", () => {
+describe("CD USER", () => {
   let repository = new UsersRepository();
   let idToDelete = null;
-  it("Testeando que el usuario se crea correctamente", async () => {
+  it("CREATE - Must return an object with _id", async () => {
     let data = {
       first_name: "maxi",
       last_name: "coder",
@@ -15,7 +15,7 @@ describe("Testeando el recurso USER", () => {
     idToDelete = response._id;
     expect(response).to.have.property("_id");
   });
-  it("Testeando que el usuario se elimina correctamente", async () => {
+  it("DESTROY - Must destroy a user", async () => {
     await repository.delete(idToDelete);
     let response = await repository.getBy({ _id: idToDelete });
     expect(response).to.be.equals(null);
