@@ -1,0 +1,276 @@
+components:
+  schemas:
+    Pets:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: date
+          description: Fecha de nacimiento estimada de la mascota
+        adopted:
+          type: boolean
+          description: Fue adoptado ya?
+        owner:
+          type: string
+          description: ObjectId de referencia del usuario dueño de la mascota
+        image:
+          type: string
+          description: Foto de la mascota
+      example:
+        name: Rufus
+        specie: Labrador
+        birthDate: 12-30-2000
+        adopted: true
+        owner: 650b6a88674d074e1dca8c12
+        image: https://assets.stickpng.com/images/580b57fbd9996e24bc43bbdc.png
+  update:
+    pet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+      example:
+        name: Ulrich
+  responses:
+    createSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        payload:
+          type: object
+          description: Objeto con los datos de la mascota ingresada
+      example:
+        status: success
+        payload:
+          name: Rufus
+          specie: Labrador
+          birthDate: 2000-12-30
+          adopted": false
+          image: https://assets.stickpng.com/images/580b57fbd9996e24bc43bbdc.png
+          _id: 653bc489806d3d93518d1ea8
+          _v: 0
+    clientError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: error
+        from: POST /api/pets middleware
+        message: Incomplete values
+    serverError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: fatal
+        from: POST /api/pets error handler
+        message: Dat is not defined
+    readSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        payload:
+          type: array
+          description: Lista de mascotas
+      example:
+        status: success
+        payload:
+          - name: Rufus
+            specie: Labrador
+            birthDate: 2000-12-30
+            adopted": false
+            image: https://assets.stickpng.com/images/580b57fbd9996e24bc43bbdc.png
+            _id: 653bc489806d3d93518d1ea8
+            _v: 0
+          - name: Nolink
+            specie: Salchicha
+            birthDate: 2000-12-30
+            adopted": false
+            image: https://img.pikbest.com/origin/09/19/03/389pIkbEsT3kc.png!w700wp
+            _id: 653bc489806d3d93518d1dc9
+            _v: 0
+    updSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        message:
+          type: string
+          description: Mensaje de éxito
+      example:
+        status: success
+        message: Pet updated
+    dtySuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        message:
+          type: string
+          description: Mensaje de éxito
+      example:
+        status: success
+        message: Pet deleted
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: error
+        from: GET /api/pets controller
+        message: not found docs
+paths:
+  /api/pets:
+    post:
+      summary: Crear una nueva mascota en la base de datos
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pets'
+      responses:
+        "201":
+          description: Éxito en la creación de una mascota
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/createSuccess'
+        "400":
+          description: Fracaso en la creación de una mascota
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/clientError'
+        "500":
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/serverError'
+    get:
+      summary: Leer todas las mascotas de la base de datos (paginadas)
+      tags:
+        - Pets
+      responses:
+        "200":
+          description: Éxito en la lectura de mascotas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/readSuccess'
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/serverError'
+  /api/pets/{pid}:
+    put:
+      summary: Actualizar los datos de una mascota
+      tags:
+        - Pets
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id de la mascota a actualizar"
+        type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/update/pet'
+      responses:
+        "200":
+          description: Éxito en la actualizacion de mascotas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/updSuccess'
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/serverError'
+    delete:
+      summary: Eliminar una mascota de la base de datos
+      tags:
+        - Pets
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id de la mascota a eliminar"
+        type: string
+      responses:
+        "200":
+          description: Éxito en la eliminación de mascotas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/dtySuccess'
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Servidor caído
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/serverError'
